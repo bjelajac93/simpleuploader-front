@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './download.component.html',
   styleUrls: ['./download.component.scss']
 })
-export class DownloadComponent implements OnInit {
+export class DownloadComponent {
   @Input() public disabled!: boolean;
   @Input() public fileName!: string;
   @Output() public loadingStatus: EventEmitter<boolean>;
@@ -18,8 +18,6 @@ export class DownloadComponent implements OnInit {
     this.loadingStatus = new EventEmitter<boolean>();
   }
   
-  ngOnInit(): void {}
-
   public download() {
     this.loadingStatus.emit(true);
     this.uploadDownloadService.downloadFile(this.fileName).subscribe(
