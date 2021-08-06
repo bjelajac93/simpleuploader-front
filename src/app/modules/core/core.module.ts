@@ -1,17 +1,20 @@
 // Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 // Components
 import { HeaderComponent } from './header/header.component';
-import { SharedModule } from '../shared/shared.module';
+// Pipes
 import { FormatBytesPipe } from './pipes/format-bytes.pipe';
 import { SortPipe } from './pipes/sort.pipe';
+import { SearchPipe } from './pipes/search.pipe';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FormatBytesPipe,
-    SortPipe
+    SortPipe,
+    SearchPipe
   ],
   imports: [
     CommonModule,
@@ -20,7 +23,8 @@ import { SortPipe } from './pipes/sort.pipe';
   exports: [
     HeaderComponent,
     FormatBytesPipe,
-    SortPipe
+    SortPipe,
+    SearchPipe
   ]
 })
 export class CoreModule { }

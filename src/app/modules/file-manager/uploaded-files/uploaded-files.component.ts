@@ -2,6 +2,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 // Services
 import { UploadDownloadService } from '../../core/services/upload-download.service';
 // Models
@@ -9,16 +10,18 @@ import { FileData } from '../../shared/models/file-data';
 // Pipes
 import { FormatBytesPipe } from '../../core/pipes/format-bytes.pipe';
 import { SortPipe } from '../../core/pipes/sort.pipe';
+import { SearchPipe } from '../../core/pipes/search.pipe';
 
 @Component({
   selector: 'app-uploaded-files',
   templateUrl: './uploaded-files.component.html',
   styleUrls: ['./uploaded-files.component.scss'],
-  providers: [FormatBytesPipe, SortPipe]
+  providers: [FormatBytesPipe, SortPipe, SearchPipe]
 })
 export class UploadedFilesComponent implements OnInit, OnDestroy {
   public files: FileData[] = [];
   public loading: boolean = false;
+  public fileTypes = environment.allowedFileTypes.split(',');
 
   private destroy$: Subject<void> = new Subject<void>();
 
