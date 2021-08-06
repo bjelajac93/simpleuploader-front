@@ -7,14 +7,12 @@ import { HeaderComponent } from './header/header.component';
 // Pipes
 import { FormatBytesPipe } from './pipes/format-bytes.pipe';
 import { SortPipe } from './pipes/sort.pipe';
-import { SearchPipe } from './pipes/search.pipe';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FormatBytesPipe,
-    SortPipe,
-    SearchPipe
+    SortPipe
   ],
   imports: [
     CommonModule,
@@ -23,8 +21,7 @@ import { SearchPipe } from './pipes/search.pipe';
   exports: [
     HeaderComponent,
     FormatBytesPipe,
-    SortPipe,
-    SearchPipe
+    SortPipe
   ]
 })
 export class CoreModule { }

@@ -1,11 +1,11 @@
 
-<div class="container mt-5">
+<div class="container mt-5" *ngIf="!loading">
   <div class="row d-flex justify-content-between mt-2 mb-2">
     <h2 class="text-center">A Simple List of Your Files</h2>
-    <app-upload [disabled]="loading" (loadingStatus)="loadingStatus($event)"></app-upload>
+    <app-upload [disabled]="loading" [itemsLength]="files.length" (loadingStatus)="loadingStatus($event)"></app-upload>
   </div>
-  <div class="row" *ngFor="let fileType of fileTypes; let i = index; trackBy: identify">
-    <caption>{{ fileType }}</caption>
+  <div class="row" *ngFor="let fileGroup of fileGroups; let i = index; trackBy: identify">
+    <caption>{{ fileGroup.fileType }}</caption>
     <table class="table">
       <thead>
         <tr>
@@ -17,16 +17,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let file of files | search: fileType | sort: 'uploadDate'; let i = index; trackBy: identify">
+        <tr *ngFor="let file of fileGroup.fileData | sort: 'uploadDate'; let i = index; trackBy: identify">
           <td scope="row">{{ i + 1 }}</td>
           <td>{{ file.fileName }}</td>
           <td class="text-right">{{ file.fileSize | formatBytes }}</td>
           <td class="text-right">{{ file.fileType }}</td>
           <td class="text-right">
-            <app-download [disabled]="loading" [fileName]="file.fileName" (loadingStatus)="loadingStatus($event)"></app-download>
+            <app-download [disabled]="loading" [fileName]="file.fileName"></app-download>
           </td>
         </tr>
-        <tr *ngIf="!(files | search: fileType).length">
+        <tr *ngIf="!fileGroup.fileData.length">
           <td colspan="5">
             <span class="d-flex font-weight-bold justify-content-center">No Data</span>
           </td>

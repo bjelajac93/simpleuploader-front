@@ -5,3 +5,8 @@ export interface FileData {
      fileType: string;
      uploadDate: Date;
 }
+
+export interface FileGroup {
+     fileData: FileData[];
+     fileType: string;
+}

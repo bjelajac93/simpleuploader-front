@@ -6,19 +6,19 @@ import { environment } from 'src/environments/environment';
 // Services
 import { UploadDownloadService } from '../../core/services/upload-download.service';
 // Models
-import { FileData } from '../../shared/models/file-data';
+import { FileData, FileGroup } from '../../shared/models/file-data';
 // Pipes
 import { FormatBytesPipe } from '../../core/pipes/format-bytes.pipe';
 import { SortPipe } from '../../core/pipes/sort.pipe';
-import { SearchPipe } from '../../core/pipes/search.pipe';
 
 @Component({
   selector: 'app-uploaded-files',
   templateUrl: './uploaded-files.component.html',
   styleUrls: ['./uploaded-files.component.scss'],
-  providers: [FormatBytesPipe, SortPipe, SearchPipe]
+  providers: [FormatBytesPipe, SortPipe]
 })
 export class UploadedFilesComponent implements OnInit, OnDestroy {
+  public fileGroups: FileGroup[] = [];
   public files: FileData[] = [];
   public loading: boolean = false;
   public fileTypes = environment.allowedFileTypes.split(',');
@@ -33,6 +33,7 @@ export class UploadedFilesComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (fileData: FileData) => {
           this.files.push(fileData);
+          this.reMapData();
           this.loading = false;
         }, 
         error: () => {}
@@ -40,10 +41,26 @@ export class UploadedFilesComponent implements OnInit, OnDestroy {
     this.getFiles();
   }
 
+  private reMapData() {
+      this.fileGroups = [];
+      this.files.forEach((f) => {
+          let fileGroup: FileGroup = {
+            fileType: f.fileType,
+            fileData: this.files.filter((fc) => fc.fileType === f.fileType)
+          }
+          let groupIndex = this.fileGroups.findIndex((fg) => fg.fileType === fileGroup.fileType);
+
+          if (groupIndex === -1)  {
+            this.fileGroups.push(fileGroup);
+          }
+      });
+  }
+
   private getFiles() {
     this.uploadDownloadService.getFiles().subscribe(
       (files: FileData[]) => {
         this.files = files;
+        this.reMapData();
       }
     );
   }

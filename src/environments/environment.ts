@@ -7,7 +7,7 @@ export const environment = {
   appVersion: require('../../package.json').version + '-dev',
   allowedNumberOfFiles: 15,
   allowedFileSize: 20480,
-  allowedFileTypes: "image/png, image/gif, image/jpeg",
+  allowedFileTypes: "image/jpg, image/png, image/gif, image/jpeg",
   production: false
 };
 
