@@ -3,6 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  API_ENDPOINT: 'https://localhost:44390/api/uploaddownload/',
+  appVersion: require('../../package.json').version + '-dev',
+  allowedNumberOfFiles: 15,
+  allowedFileSize: 20480,
+  allowedFileTypes: "image/png, image/gif, image/jpeg",
   production: false
 };
 
